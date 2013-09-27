@@ -1,16 +1,16 @@
 tilecannon
 ==========
 
-![alt tag](http://images2.wikia.nocookie.net/__cb20100708175738/megaman/images/c/c6/Tile_cannon.jpg)
+![alt tag](www.guerrillagis.net/public_html/tilecannon.png)
 
-An IIS tileserver for mbtiles, UTFGrids and ESRI bundled cache
+An IIS (ASP.NET MVC) tileserver for mbtiles, UTFGrids and ESRI bundled cache
 
-At my agency we do a lot of caching.
-We write code in Python and C#.NET
-We mainly use ArcGIS Server to create caches (lots of air photos)
-We run Windows web servers and IIS.
-We've graduated from exploded cache to bundled cache.
-I (personally) am very sick of ArcGIS Server.
+* At my agency we do a lot of caching.
+* We write code in Python and C#.NET
+* We mainly use ArcGIS Server to create caches (lots of air photos)
+* We run Windows web servers and IIS.
+* We've graduated from exploded cache to bundled cache.
+* I (personally) am very sick of ArcGIS Server.
 
 We also kinda like all the kool kids with their Tilemills, Mapboxes and UTFGrids.
 
@@ -23,6 +23,7 @@ Todo
 * support exploded cache without having to check on each tile
 * Scrub out non-Web Merc bundled cache services.
 * Support a different dataframe name (e.g most of the time it's "Layers", but not always)
+* Implement WMTS specification.
 
 FAQ
 ---
