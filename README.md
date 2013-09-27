@@ -8,14 +8,13 @@ An IIS (ASP.NET MVC) tileserver for mbtiles, UTFGrids and ESRI bundled cache
 * At my agency we do a lot of caching.
 * We write code in Python and C#.NET
 * We mainly use ArcGIS Server to create caches (lots of air photos)
+* We utilize bundled cache.
 * We run Windows web servers and IIS.
-* We've graduated from exploded cache to bundled cache.
-* I (personally) am very sick of ArcGIS Server.
+* ArcGIS Server is mostly super overkill.
+* We like Tilemill, Mapbox, Mapnik, Carto CSS, UTFGrids etc.
 
-We also kinda like all the kool kids with their Tilemills, Mapboxes and UTFGrids.
-
-To this end, I've written this tileserver to be a swiss army knife for serving both
- mbtiles files and ESRI bundled cache.
+To this end, I've written this tileserver to be a swiss army knife for serving 
+ mbtiles, UTFGrids, and ESRI bundled cache.
 
 Todo
 ----
