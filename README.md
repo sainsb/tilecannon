@@ -1,7 +1,7 @@
 tilecannon
 ==========
 
-![alt tag](www.guerrillagis.net/public_html/tilecannon.png)
+![alt tag](http://www.guerrillagis.net/tilecannon.png)
 
 An IIS (ASP.NET MVC) tileserver for mbtiles, UTFGrids and ESRI bundled cache
 
