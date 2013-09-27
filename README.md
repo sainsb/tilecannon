@@ -30,4 +30,4 @@ FAQ
 
 * # How do I set this thing up?
 
-In the global.asax change the directory pointers to where you keep your mbtiles files, your bundled cache, and the name of your host.
+In the global.asax change the directory pointers to where you keep your mbtiles files, your bundled cache, and the name of your host. Then push the big green 'GO' button.
