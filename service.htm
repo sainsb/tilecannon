@@ -91,7 +91,7 @@
         var ix = jQuery.inArray('MBTILES', u) + 1;
         var layer = document.URL.split('/')[ix];
 
-        var server = window.location.hostname;
+        var server = window.location.host;
 
         $(window).ready(function () {
             $.getJSON('../' + layer + "/tilejson", function (data) {
@@ -107,7 +107,8 @@
 
             console.log(data.bounds);
 
-            var map = L.map('map').fitBounds([data.bounds.slice(0, 2).reverse(), data.bounds.slice(2, 4).reverse()]);
+            var map = L.map('map').fitBounds([data.bounds.slice(0, 2).reverse(), data.bounds.slice(2, 4).reverse()]);
+
             var fullScreen = new L.Control.FullScreen();
             map.addControl(fullScreen);
 
