@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Data.SQLite;
+using System.Configuration;
 
 namespace Tilecannon
 {
@@ -11,9 +12,9 @@ namespace Tilecannon
     public class tilecannon : HttpApplication
     {
 
-        public static string TILEPATH = "C:/mbtiles/";
-        public static string ESRIPATH = @"\\alex\agfs\arcgisserver\directories\arcgiscache\";
-        public static string SERVER = "localhost";
+        public static string TILEPATH = ConfigurationManager.AppSettings["TILEPATH"];//"C:/mbtiles/";
+        public static string ESRIPATH = ConfigurationManager.AppSettings["ESRIPATH"];//@"\\alex\agfs\arcgisserver\directories\arcgiscache\";
+        public static string SERVER = ConfigurationManager.AppSettings["SERVER"];//"localhost";
 
         public static Dictionary<string, SQLiteConnection> SqLiteConnections;
 
