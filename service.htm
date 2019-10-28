@@ -88,9 +88,12 @@
     <script type="text/javascript" src="../js/Control.FullScreen.js"></script>
     <script type="text/javascript">
         var u = document.URL.toUpperCase().split('/');
-        var ix = jQuery.inArray('MBTILES', u) + 1;
+		console.log(u)
+        var ix = jQuery.inArray('TILESERVER', u) + 1;
+		console.log(ix);
         var layer = document.URL.split('/')[ix];
 
+		console.log(layer)
         var server = window.location.hostname;
 
         $(window).ready(function () {
@@ -111,7 +114,7 @@
             var fullScreen = new L.Control.FullScreen();
             map.addControl(fullScreen);
 
-            L.tileLayer('//'+server+'/mbtiles/'+layer+'/{z}/{x}/{y}.png',{ maxZoom: data.maxzoom, minZoom: data.minzoom,  attribution: '&copy;'+data.attribution }).addTo(map);
+            L.tileLayer('//'+server+'/tileserver/'+layer+'/{z}/{x}/{y}.png',{ maxZoom: data.maxzoom, minZoom: data.minzoom,  attribution: '&copy;'+data.attribution }).addTo(map);
 
             if(typeof data.grids != 'undefined') {
                 var grid1 = L.mapbox.gridLayer('//' + server + '/mbtiles/' + layer + '/tilejson').addTo(map);

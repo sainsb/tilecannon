@@ -61,9 +61,18 @@ namespace Tilecannon.Controllers
 
         public ActionResult Tile(string service, int? x, int? y, byte? z)
         {
-            return File(tilecannon.SqLiteConnections.ContainsKey(service) ?
+
+            var file = tilecannon.SqLiteConnections.ContainsKey(service) ?
                 GetTile(service, x, y, z) :
-                GetBundleTile(service, (int)x, (int)y, (int)z), "image/png");
+                GetBundleTile(service, (int)x, (int)y, (int)z);
+
+            if(file == null){
+                var arr = Convert.FromBase64String("iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAMAAABrrFhUAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAMAUExURQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALMw9IgAAAEAdFJOU////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////wBT9wclAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAGHRFWHRTb2Z0d2FyZQBwYWludC5uZXQgNC4xLjb9TgnoAAABmklEQVR4Xu3QIQEAAAyEwPUv/TO0gDN4bnINoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFryAdsDag8O8rylp3IAAAAASUVORK5CYII=");
+
+                return this.File(arr, "image/png", "image.png");
+            } else {
+                return File(file,"image.png");
+            }
         }
 
         private static byte[] GetTile(string service, int? x, int? y, byte? z)
@@ -83,7 +92,15 @@ namespace Tilecannon.Controllers
                 var command = String.Format("select tile_data as t from tiles where zoom_level={0} and tile_column={1} and tile_row={2}", z, x, y);
                 cmd.CommandText = command;
 
-                return (byte[])cmd.ExecuteScalar() ?? new byte[] { 0 };
+                var tile = (byte[])cmd.ExecuteScalar();
+
+                if(tile != null){
+                    return tile;
+                } else {
+
+                    return Convert.FromBase64String("iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAMAAABrrFhUAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAMAUExURQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALMw9IgAAAEAdFJOU////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////wBT9wclAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAGHRFWHRTb2Z0d2FyZQBwYWludC5uZXQgNC4xLjb9TgnoAAABmklEQVR4Xu3QIQEAAAyEwPUv/TO0gDN4bnINoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFoNoFryAdsDag8O8rylp3IAAAAASUVORK5CYII=");
+
+                }
             }
         }
 
@@ -288,8 +305,12 @@ namespace Tilecannon.Controllers
             var row = y - bundle_filename_row;
 
             var index = 128 * (col - 0) + (row - 0);
-
-            var isBundlx = new FileStream(bundlxFileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+            FileStream isBundlx;
+            try{
+                isBundlx = new FileStream(bundlxFileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+            }catch(Exception ex){
+                return null;
+            }
 
             isBundlx.Seek(16 + 5 * index, 0);
 
